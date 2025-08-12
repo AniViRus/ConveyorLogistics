@@ -37,7 +37,6 @@ void AAVRPBuildableSplitterWeighted::BeginPlay()
 		}
 		});
 	mOutputs.Sort([](const UFGFactoryConnectionComponent& A, const UFGFactoryConnectionComponent& B) { return (A.GetRelativeLocation().Y < B.GetRelativeLocation().Y); });
-	mOutputWeights.Init(0, 3);
 	mOutputs[0]->SetInventory(GetBufferInventory());
 
 	FScriptDelegate OnItemRemoved;
@@ -48,6 +47,7 @@ void AAVRPBuildableSplitterWeighted::BeginPlay()
 void AAVRPBuildableSplitterWeighted::Factory_Tick(float deltaTime)
 {
 	Super::Factory_Tick(deltaTime);
+	if (!HasAuthority() || mOutputs.IsEmpty() || mInputs.IsEmpty() || !GetBufferInventory()) return;
 	bool noOutputs = true;
 	for (int i = 0; i < mOutputs.Num(); i++) {
 		if (mOutputs[i]->IsConnected()) {
@@ -71,17 +71,14 @@ int32 AAVRPBuildableSplitterWeighted::GetWeightByOutputIndex(int32 outputIndex) 
 
 void AAVRPBuildableSplitterWeighted::SetWeightByOutputIndex(int32 outputIndex, int32 newWeight)
 {
-	mOutputWeights[outputIndex] = newWeight;
+	auto _newOutputWeights = TArray<int32>(mOutputWeights);
+	_newOutputWeights[outputIndex] = newWeight;
+	mOutputWeights = _newOutputWeights;
 }
 
 void AAVRPBuildableSplitterWeighted::SetOutputWeights(TArray<int32> newOutputWeights)
 {
-	mOutputWeights = newOutputWeights;
-	OnOutputWeightsChanged.Broadcast();
-}
-
-void AAVRPBuildableSplitterWeighted::ApplyOutputWeightsToMesh_Implementation()
-{
+	mOutputWeights = TArray<int32>(newOutputWeights);
 }
 
 void AAVRPBuildableSplitterWeighted::OnItemRemoved()
@@ -105,5 +102,5 @@ void AAVRPBuildableSplitterWeighted::IterateOutputs()
 
 void AAVRPBuildableSplitterWeighted::OnRep_OutputWeights()
 {
-	
+	OnOutputWeightsChanged.Broadcast();
 }

@@ -37,11 +37,11 @@ public:
 	FORCEINLINE TArray<UFGFactoryConnectionComponent*> GetOutputConnections() const { return mOutputs; }
 
 	/** Updates the weight for the output connection at the given index to the specified value */
-	UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Category = "Weighted Splitter")
+	UFUNCTION()
 	void SetWeightByOutputIndex(int32 outputIndex, int32 newWeight);
 
 	/** Updates the weights for all outputs in this splitter. The passed array size must match the number of outputs in this splitter */
-	UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Category = "Weighted Splitter")
+	UFUNCTION()
 	void SetOutputWeights(TArray<int32> newOutputWeights);
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOutputWeightsChanged);
@@ -49,9 +49,6 @@ public:
 	UPROPERTY( BlueprintAssignable, Category = "Sort" )
 	FOnOutputWeightsChanged OnOutputWeightsChanged;
 protected:
-	/** Can be overriden to apply output weights to the mesh of the buildable. By default, it will apply it through customization data's extra data */
-	UFUNCTION(BlueprintNativeEvent, Category = "Weighted Splitter", meta = (ForceAsFunction))
-	void ApplyOutputWeightsToMesh();
 	/* Iteration implementation occuring upon various circumstances like failing to put item into the buffer inventory. */
 	UFUNCTION()
 	void OnItemRemoved();
@@ -59,17 +56,16 @@ protected:
 	void IterateOutputs();
 
 	/** Cycles through the outputs, stores the output we want to put mItem on. Index is for the mOutputs array. */
-	UPROPERTY(SaveGame, Meta = (NoAutoJson))
+	UPROPERTY(Replicated, SaveGame, Meta = (NoAutoJson))
 	int32 mCurrentOutputIndex;
 
 	/** Amount of items we have put to the current output. Upon it turning equal to current output's weight, output index changes and the counter is reset. */
-	UPROPERTY(SaveGame, Meta = (NoAutoJson))
+	UPROPERTY(Replicated, SaveGame, Meta = (NoAutoJson))
 	int32 mCurOutputItemCount;
 private:
-	UFUNCTION()
-	void OnRep_OutputWeights();
-
 	/** Weight number for each output connection of the weight */
-	UPROPERTY(ReplicatedUsing = OnRep_OutputWeights, SaveGame)
-	TArray<int32> mOutputWeights;
+	UPROPERTY(ReplicatedUsing=OnRep_OutputWeights, SaveGame)
+	TArray<int32> mOutputWeights = {0, 0, 0};
+	UFUNCTION() 
+	void OnRep_OutputWeights();
 };
