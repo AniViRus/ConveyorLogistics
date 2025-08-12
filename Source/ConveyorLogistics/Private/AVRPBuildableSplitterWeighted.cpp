@@ -74,11 +74,13 @@ void AAVRPBuildableSplitterWeighted::SetWeightByOutputIndex(int32 outputIndex, i
 	auto _newOutputWeights = TArray<int32>(mOutputWeights);
 	_newOutputWeights[outputIndex] = newWeight;
 	mOutputWeights = _newOutputWeights;
+	OnRep_OutputWeights();
 }
 
 void AAVRPBuildableSplitterWeighted::SetOutputWeights(TArray<int32> newOutputWeights)
 {
 	mOutputWeights = TArray<int32>(newOutputWeights);
+	OnRep_OutputWeights();
 }
 
 void AAVRPBuildableSplitterWeighted::OnItemRemoved()
