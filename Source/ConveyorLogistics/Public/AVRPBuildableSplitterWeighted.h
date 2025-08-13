@@ -65,7 +65,7 @@ protected:
 private:
 	/** Weight number for each output connection of the weight */
 	UPROPERTY(ReplicatedUsing=OnRep_OutputWeights, SaveGame)
-	TArray<int32> mOutputWeights = {0, 0, 0};
+	TArray<int32> mOutputWeights;
 	UFUNCTION() 
 	void OnRep_OutputWeights();
 };
