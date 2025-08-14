@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0.0",
 	"FriendlyName": "Simple Conveyor Logistics",
-	"Description": "Adds Conveyor Junctions and Weighted Splitters",
+	"Description": "Adds Conveyor Junctions and Weighted Splitters to minimize early-game load balancing infrastructure",
 	"Category": "Modding",
 	"CreatedBy": "AniViRus Productions",
 	"CreatedByURL": "",
