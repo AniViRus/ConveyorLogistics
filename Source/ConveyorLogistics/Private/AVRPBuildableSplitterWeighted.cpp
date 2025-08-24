@@ -38,6 +38,7 @@ void AAVRPBuildableSplitterWeighted::BeginPlay()
 		}
 		});
 	mOutputs.Sort([](const UFGFactoryConnectionComponent& A, const UFGFactoryConnectionComponent& B) { return (A.GetRelativeLocation().Y < B.GetRelativeLocation().Y); });
+	if (!HasAuthority()) return; //Don't really need to care about these since factory connections, belts and inventories are already replicated on their own.
 	mOutputs[0]->SetInventory(GetBufferInventory());
 	FScriptDelegate OnItemRemoved;
 	OnItemRemoved.BindUFunction(this, "OnItemRemoved");

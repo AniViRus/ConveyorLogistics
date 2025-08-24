@@ -35,6 +35,7 @@ void AAVRPBuildableAttachmentJunction::BeginPlay()
 	mOutputs.Sort([](const UFGFactoryConnectionComponent& A, const UFGFactoryConnectionComponent& B) { return (A.GetRelativeLocation().Y < B.GetRelativeLocation().Y); });
 	mInputs.Sort([](const UFGFactoryConnectionComponent& A, const UFGFactoryConnectionComponent& B) { return (A.GetRelativeLocation().Y < B.GetRelativeLocation().Y); });
 	//A rough way of setting up connections, sorting is deterministic and doesn't care about verticality in case we build a lift.
+	if (!HasAuthority()) return;
 	mOutputs[0]->SetInventory(GetSecondBufferInventory());
 	mOutputs[1]->SetInventory(GetBufferInventory());
 }
