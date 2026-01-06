@@ -31,6 +31,7 @@ void AAVRPBuildableSplitterWeighted::BeginPlay()
 		switch (FactoryConn->GetDirection()) {
 		case EFactoryConnectionDirection::FCD_INPUT:
 			mInputs.Add(FactoryConn);
+			FactoryConn->SetForwardPeekAndGrabToBuildable(false);
 			break;
 		case EFactoryConnectionDirection::FCD_OUTPUT:
 			mOutputs.Add(FactoryConn);
@@ -40,6 +41,7 @@ void AAVRPBuildableSplitterWeighted::BeginPlay()
 	mOutputs.Sort([](const UFGFactoryConnectionComponent& A, const UFGFactoryConnectionComponent& B) { return (A.GetRelativeLocation().Y < B.GetRelativeLocation().Y); });
 	if (!HasAuthority()) return; //Don't really need to care about these since factory connections, belts and inventories are already replicated on their own.
 	mOutputs[0]->SetInventory(GetBufferInventory());
+	mOutputs[0]->SetForwardPeekAndGrabToBuildable(false);
 	FScriptDelegate OnItemRemoved;
 	OnItemRemoved.BindUFunction(this, "OnItemRemoved");
 	GetBufferInventory()->OnItemRemovedDelegate.Add(OnItemRemoved);
@@ -104,6 +106,7 @@ void AAVRPBuildableSplitterWeighted::IterateOutputs()
 		}
 	for (int i = 0; i < 3; i++) {
 			mOutputs[i]->SetInventory(i == mCurrentOutputIndex ? GetBufferInventory() : nullptr); 
+			mOutputs[i]->SetForwardPeekAndGrabToBuildable(i != mCurrentOutputIndex); //To reduce logging
 		}
 }
 
