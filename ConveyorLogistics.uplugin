@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.1.0",
+	"VersionName": "1.1.1",
 	"FriendlyName": "Simple Conveyor Logistics",
 	"Description": "Adds Conveyor Junctions and Weighted Splitters to minimize early-game load balancing infrastructure",
 	"Category": "Modding",
@@ -25,9 +25,9 @@
 		{
 			"Name": "SML",
 			"Enabled": true,
-			"SemVersion": "^3.11.3"
+			"SemVersion": "^3.12.0"
 		}
 	],
-	"SemVersion": "1.1.0",
-	"GameVersion": ">=455399"
+	"SemVersion": "1.1.1",
+	"GameVersion": ">=491125"
 }

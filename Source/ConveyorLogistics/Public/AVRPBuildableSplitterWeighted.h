@@ -45,7 +45,7 @@ public:
 	void SetOutputWeights(TArray<int32> newOutputWeights);
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOutputWeightsChanged);
-	/** Called when the weight of one or more outputs have changed */
+	/* Called when the weight of one or more outputs have changed */
 	UPROPERTY( BlueprintAssignable, Category = "Sort" )
 	FOnOutputWeightsChanged OnOutputWeightsChanged;
 protected:

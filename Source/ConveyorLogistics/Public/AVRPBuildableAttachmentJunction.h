@@ -21,8 +21,8 @@ public:
 	// Begin AFGBuildable interface
 	virtual void Factory_Tick(float deltaTime) override;
 	// End AFGBuildable interface
-	FORCEINLINE class UFGInventoryComponent* GetSecondBufferInventory() const { return mSecondBufferInventory; }
+	FORCEINLINE UFGInventoryComponent* GetSecondBufferInventory() const { return mSecondBufferInventory; }
 private:
 	UPROPERTY( SaveGame )
-	UFGInventoryComponent* mSecondBufferInventory;
+	TObjectPtr <UFGInventoryComponent> mSecondBufferInventory;
 };

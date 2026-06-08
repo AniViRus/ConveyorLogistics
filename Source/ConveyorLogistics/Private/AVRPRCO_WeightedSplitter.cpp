@@ -1,6 +1,6 @@
 #include "AVRPRCO_WeightedSplitter.h"
 #include "AVRPBuildableSplitterWeighted.h"
-#include <UnrealNetwork.h>
+#include "Net/UnrealNetwork.h"
 
 void UAVRPRCO_WeightedSplitter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {

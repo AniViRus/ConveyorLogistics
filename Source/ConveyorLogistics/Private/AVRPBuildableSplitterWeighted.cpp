@@ -1,5 +1,5 @@
 #include "AVRPBuildableSplitterWeighted.h"
-#include "UnrealNetwork.h"
+#include "Net/UnrealNetwork.h"
 
 AAVRPBuildableSplitterWeighted::AAVRPBuildableSplitterWeighted() : Super()
 {
